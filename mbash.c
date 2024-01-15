@@ -9,6 +9,7 @@ char path[MAXLI];
 int pathidx;
 void mbash();
 int main(int argc, char** argv) {
+    accueil();
   while (1) {
     printf("Commande: ");
     fgets(cmd, MAXLI, stdin);
@@ -20,4 +21,7 @@ int main(int argc, char** argv) {
 void mbash() {
   printf("Execute: %s", cmd);
   system(cmd);
+}
+void accueil(){
+  printf("Bienvenue sur Mini bash (^.^)\n");
 }
