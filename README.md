@@ -12,3 +12,10 @@ commande qui fonctionne :
 -ls -l
 -mkdir
 -touch
+-$$
+-$?
+-history
+-cd (hors cd uniquement)
+-changement du prompt (export PS1 ="*nouveau prompt*")
+
+nous avons décidées de fermer le termnial parent lors de exit.
