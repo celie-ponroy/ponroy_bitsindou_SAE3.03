@@ -26,14 +26,16 @@ void changePrompt(char *newPrompt);
 void printHistory();
 #define MAX_HISTORY_SIZE 100
 
-typedef struct {
+typedef struct {//structure pour history
     int number;
     char command[2048]; //la commande
 } CommandHistory;
 CommandHistory history[MAX_HISTORY_SIZE];
 int historyCount = 0;
 
-
+/**
+  * Fonction principale.
+*/
 int main(int argc, char** argv) {
   accueil();
   size_t promptSize = MAXLI;
@@ -46,7 +48,9 @@ int main(int argc, char** argv) {
   }
   return 0;
 }
-
+/**
+  * Fonction qui lance l'execution de la commande.
+*/
 void mbash(char* cmd) {
     char* token;
     char* tokens[MAXLI];
@@ -70,13 +74,17 @@ void mbash(char* cmd) {
 }
 
 
-
+/**
+  * Fonction qui affiche l'accueil.
+*/
 void accueil() {
   printf("Bienvenue sur Mini bash \\(^.^)/ \n");
   printf("comment ça fonctionne:\n 1-saisir votre commande \n 2-appuyer entrée\n");
 }
-
-int countnbArgs(char* cmd) { //compte le nombre d'arguments
+/**
+  * Fonction qui compte le nombre d'arguments.
+*/
+int countnbArgs(char* cmd) {
   int i = 0;
   int espaces = 0;
   int nbArgs = 1;
@@ -93,7 +101,9 @@ int countnbArgs(char* cmd) { //compte le nombre d'arguments
   }
   return nbArgs;
 }
-
+/**
+  * Fonction qui execute la commande.
+*/
 void execute(char *cmd[]) {
     char *premMot = cmd[0];
     char *dexiMot = cmd[1];
@@ -159,41 +169,9 @@ void execute(char *cmd[]) {
         }
     }
 }
-
-
-char* getpremierMot(char* cmd) {
-  int i = 0;
-  int end = 0;
-
-  // Skip les premiers espaces si il y en a
-  while (cmd[i] == ' ' || cmd[i] == '\n' || cmd[i] == '\t') {
-    i++;
-  }
-
-  // Calculer la taille du premier mot
-  int wordLength = 0;
-  while (end == 0) {
-    if (cmd[i] == ' ' || cmd[i] == '\n' || cmd[i] == '\t' || cmd[i] == '\0') {
-      end = 1;
-    } else {
-      i++;
-      wordLength++;
-    }
-  }
-
-  //allocation de la mémoire du premier mot
-  char* array = (char*)malloc((wordLength + 1) * sizeof(char));
-
-  // Copier le premier mot
-  for (int j = 0; j < wordLength; j++) {
-    array[j] = cmd[i - wordLength + j];
-  }
-
-  // fin du tableau
-  array[wordLength] = '\0';
-  return array;
-}
-
+/**
+  *fonction cd qui change le répertoire courant.
+*/
 void cd(char* args[]) {
   if (args[1] == NULL) {
     fprintf(stderr, "Expected argument to \"cd\"\n");
@@ -203,6 +181,9 @@ void cd(char* args[]) {
     }
   }
 }
+/**
+*Fonction qui change le prompt.
+*/
 void changePrompt(char* newPrompt) {
   if (newPrompt != NULL) {
     size_t length = strlen(newPrompt);
@@ -216,6 +197,9 @@ void changePrompt(char* newPrompt) {
     }
   }
 }
+/**
+*Fonction qui ajoute la commande à l'historique.
+*/
 void addToHistory(char *command[]) {
     // concatenation des mots de command
     char fullCommand[MAXLI] = "";
@@ -241,7 +225,9 @@ void addToHistory(char *command[]) {
         historyCount++;
     }
 }
-
+/**
+*Fonction qui affiche l'historique.
+*/
 void printHistory() {
     for (int i = 0; i < historyCount; i++) {
         printf("%d: %s\n", history[i].number, history[i].command);
